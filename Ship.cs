@@ -37,6 +37,7 @@ public class Ship : MonoBehaviour
     {
         Movement();
         StartCoroutine(Shoot());
+
     }
     void Movement()
     {
@@ -82,4 +83,5 @@ public class Ship : MonoBehaviour
             allowFire = true;
         }
     }
+
 }
