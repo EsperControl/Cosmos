@@ -6,6 +6,7 @@ public class PlayerInput : MonoBehaviour
 {
     [HideInInspector] public float horizontal;
     [HideInInspector] public float throttle;
+    [HideInInspector] public bool fire;
     bool readyToClear = true;
     // Start is called before the first frame update
     void Start()
@@ -37,9 +38,10 @@ public class PlayerInput : MonoBehaviour
     {
         horizontal = Input.GetAxis("Horizontal");
         throttle = Input.GetAxis("Vertical");
+        fire = Input.GetMouseButton(0);
         //horizontal = Mathf.Clamp(horizontal, -100, 100);
         //throttle = Mathf.Clamp(throttle, -100, 100);
-        print(string.Format("horizontal = {0}\nvertical = {1}", horizontal, throttle));
+        print(string.Format("horizontal = {2}\nvertical = {1}\nfire = {2}", horizontal, throttle,fire));
 
     }
 }

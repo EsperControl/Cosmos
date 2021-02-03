@@ -11,6 +11,9 @@ public class Ship : MonoBehaviour
     [SerializeField] float stabilisation = 1f;
     [SerializeField] bool controled = true;
     [SerializeField] int ControlScheme = 0;
+    [SerializeField] Projectile bullet;
+    [SerializeField] float firerate = 1f;
+    private bool allowFire = true;
 
 
     PlayerInput input;                      //The current inputs for the player
@@ -33,6 +36,8 @@ public class Ship : MonoBehaviour
     void FixedUpdate()
     {
         Movement();
+        StartCoroutine(Shoot());
+
     }
     void Movement()
     {
@@ -61,6 +66,22 @@ public class Ship : MonoBehaviour
         float sin = Mathf.Sin(transform.eulerAngles.z * Mathf.Deg2Rad);
         Vector2 velocity = new Vector2(-sin, cos);
         rigidBody.velocity = velocity*speed;
+    }
+
+    IEnumerator Shoot()
+    {
+        if (input.fire && allowFire)
+        {
+            allowFire = false;
+            Vector2 offset = new Vector2();
+            Projectile p = Instantiate(bullet, transform.position, transform.rotation,transform);
+            float cos = Mathf.Cos(transform.eulerAngles.z * Mathf.Deg2Rad);
+            float sin = Mathf.Sin(transform.eulerAngles.z * Mathf.Deg2Rad);
+            float bulletSpeed = 1f;
+            p.GetComponent<Rigidbody2D>().velocity = new Vector2(-sin, cos) * bulletSpeed;
+            yield return new WaitForSeconds(firerate);
+            allowFire = true;
+        }
     }
 
 }
